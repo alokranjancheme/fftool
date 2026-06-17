@@ -1,0 +1,18 @@
+pd4
+
+1 Pd1
+2 Pd2  1  2.5623
+3 Pd3  2  2.5628  1  69.36
+4 Pd4  3  2.5622  2  69.41  1  61.38
+
+connect 1 3
+connect 1 4
+connect 2 4
+
+elements
+Pd1 Pd
+Pd2 Pd
+Pd3 Pd
+Pd4 Pd
+
+pd4.ff

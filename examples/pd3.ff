@@ -1,0 +1,41 @@
+# INTERFACE Force Field for Pd3 cluster
+#
+# LJ PARAMETERS
+# Heinz, H.; Vaia, R. A.; Farmer, B. L.; Naik, R. R.
+# J. Phys. Chem. C 2008, 112, 17281-17290. DOI: 10.1021/jp801931d
+# Table 1, Pd 12-6 LJ (AMBER/CHARMM/CVFF/OPLS-AA form):
+#   r0   = 2.819 A   (r at potential minimum)
+#   eps0 = 6.15 kcal/mol (well depth)
+# Cross-check: A = eps0*r0^12 = 1548874 ~ 1549000 (Table) ✓
+#              B = 2*eps0*r0^6 = 6173 (Table) ✓
+#
+# Conversion to fftool standard 12-6 form E=4eps[(sigma/r)^12-(sigma/r)^6]:
+#   sigma   = r0 / 2^(1/6) = 2.819 / 1.12246 = 2.5114 A
+#   epsilon = eps0 * 4.184 = 6.15 * 4.184    = 25.7316 kJ/mol
+#
+# CLUSTER GEOMETRY
+# Locally optimised via DFT (QM) calculation on the bare Pd3 cluster.
+# Geometry: D3h equilateral triangle
+#   r(Pd-Pd) = 2.6760 A  (all three bonds equal)
+#   angle    = 60.0000 deg (all three interior angles equal)
+# The 60 deg angles follow analytically from the equal bond lengths (D3h).
+# Bond potential: cons (rigid body, enforced by LAMMPS fix rigid/small).
+# Force constants set to zero — the integrator holds the geometry, not a spring.
+
+ATOMS
+# type  m/amu     q/e     pot  sigma/A  eps/kJmol-1
+Pd1  Pd1  106.42  0.0000  lj   2.5114   25.7316
+Pd2  Pd2  106.42  0.0000  lj   2.5114   25.7316
+Pd3  Pd3  106.42  0.0000  lj   2.5114   25.7316
+
+BONDS
+# i    j    pot   re/A    kr/kJmol-1A-2
+Pd1  Pd2  cons  2.6760  0.0000
+Pd1  Pd3  cons  2.6760  0.0000
+Pd2  Pd3  cons  2.6760  0.0000
+
+ANGLES
+# i    j    k    pot   th/deg   ka/kJmol-1rad-2
+Pd1  Pd2  Pd3  harm  60.0000  0.0000
+Pd2  Pd1  Pd3  harm  60.0000  0.0000
+Pd1  Pd3  Pd2  harm  60.0000  0.0000

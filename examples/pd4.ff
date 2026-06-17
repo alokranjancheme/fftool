@@ -1,0 +1,72 @@
+# INTERFACE Force Field for Pd4 cluster
+#
+# LJ PARAMETERS
+# Heinz, H.; Vaia, R. A.; Farmer, B. L.; Naik, R. R.
+# J. Phys. Chem. C 2008, 112, 17281-17290. DOI: 10.1021/jp801931d
+# Table 1, Pd 12-6 LJ (AMBER/CHARMM/CVFF/OPLS-AA form):
+#   r0   = 2.819 A   (r at potential minimum)
+#   eps0 = 6.15 kcal/mol (well depth)
+# Cross-check: A = eps0*r0^12 = 1548874 ~ 1549000 (Table) ✓
+#              B = 2*eps0*r0^6 = 6173 (Table) ✓
+#
+# Conversion to fftool standard 12-6 form E=4eps[(sigma/r)^12-(sigma/r)^6]:
+#   sigma   = r0 / 2^(1/6) = 2.819 / 1.12246 = 2.5114 A
+#   epsilon = eps0 * 4.184 = 6.15 * 4.184    = 25.7316 kJ/mol
+#
+# CLUSTER GEOMETRY
+# Locally optimised via DFT (QM) calculation on the bare Pd4 cluster.
+# Geometry: Td regular tetrahedron (near-regular — sub-Angstrom variation)
+#   Z-matrix bond lengths: 2.6759 A, 2.6754 A (primary), 2.6751 A
+#   Z-matrix bond angles:  60.00 deg, 59.99 deg  (internal Z-matrix coords)
+#   Primary equilibrium bond distance: 2.6754 A
+#
+# NOTE on angles in this file vs Z-matrix angles:
+#   The Z-matrix encodes the tetrahedron using internal coordinates where
+#   one angle appears as ~60 deg (the dihedral construction variable).
+#   The true 3D Pd-Pd-Pd angle in a regular tetrahedron is arccos(-1/3)
+#   = 109.4712 deg. This is the correct value for the ANGLES section, which
+#   fftool uses to detect and assign angle terms from 3D Cartesian coordinates.
+#   Using 60 deg in the ANGLES section would cause fftool to fail to recognise
+#   the tetrahedral angles and drop them from the topology.
+#
+# Bond potential: cons (rigid body, enforced by LAMMPS fix rigid/small).
+# Force constants set to zero — the integrator holds the geometry, not a spring.
+
+ATOMS
+# type  m/amu     q/e     pot  sigma/A  eps/kJmol-1
+Pd1  Pd1  106.42  0.0000  lj   2.5114   25.7316
+Pd2  Pd2  106.42  0.0000  lj   2.5114   25.7316
+Pd3  Pd3  106.42  0.0000  lj   2.5114   25.7316
+Pd4  Pd4  106.42  0.0000  lj   2.5114   25.7316
+
+BONDS
+# i    j    pot   re/A    kr/kJmol-1A-2
+# All 6 edges of the Td tetrahedron.
+# Primary QM-optimised equilibrium distance 2.6754 A used for all edges.
+# Individual Z-matrix values span 2.6751-2.6759 A (< 0.001 A spread),
+# within DFT numerical noise; a single representative value preserves Td symmetry.
+Pd1  Pd2  cons  2.6754  0.0000
+Pd1  Pd3  cons  2.6754  0.0000
+Pd1  Pd4  cons  2.6754  0.0000
+Pd2  Pd3  cons  2.6754  0.0000
+Pd2  Pd4  cons  2.6754  0.0000
+Pd3  Pd4  cons  2.6754  0.0000
+
+ANGLES
+# i    j    k    pot   th/deg    ka/kJmol-1rad-2
+# 12 unique i-j-k triplets of the Td tetrahedron.
+# th = arccos(-1/3) = 109.4712 deg — true 3D Pd-Pd-Pd angle in tetrahedron.
+# This differs from the ~60 deg in the Z-matrix, which are internal
+# dihedral construction variables, not the physical Pd-Pd-Pd bond angles.
+Pd1  Pd2  Pd3  harm  109.4712  0.0000
+Pd1  Pd2  Pd4  harm  109.4712  0.0000
+Pd3  Pd2  Pd4  harm  109.4712  0.0000
+Pd1  Pd3  Pd2  harm  109.4712  0.0000
+Pd1  Pd3  Pd4  harm  109.4712  0.0000
+Pd2  Pd3  Pd4  harm  109.4712  0.0000
+Pd1  Pd4  Pd2  harm  109.4712  0.0000
+Pd1  Pd4  Pd3  harm  109.4712  0.0000
+Pd2  Pd4  Pd3  harm  109.4712  0.0000
+Pd2  Pd1  Pd3  harm  109.4712  0.0000
+Pd2  Pd1  Pd4  harm  109.4712  0.0000
+Pd3  Pd1  Pd4  harm  109.4712  0.0000

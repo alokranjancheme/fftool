@@ -1,0 +1,14 @@
+pd3
+
+1  Pd1
+2  Pd2   1   2.9440
+3  Pd3   1   2.7476   2   57.61
+
+connect 2 3
+
+elements
+Pd1 Pd
+Pd2 Pd
+Pd3 Pd
+
+pd3.ff
