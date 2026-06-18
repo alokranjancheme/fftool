@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # fftool - generate force field parameters for molecular system
 # Agilio Padua <agilio.padua@ens-lyon.fr>, version 2026/04/01
 
@@ -43,13 +43,14 @@ atomic_wt = {'H': 1.008, 'Li': 6.941, 'B': 10.811, 'C': 12.011,
              'K': 39.098, 'Ca': 40.078, 'Ti': 47.867, 'Fe': 55.845,
              'Cu': 63.546, 'Zn': 65.38, 'Se': 78.971, 'Br': 79.904, 'Kr': 83.798,
              'Mo': 95.96, 'Ru': 101.07, 'Sn': 118.710, 'Te': 127.60,
-             'I': 126.904, 'Xe': 131.293}
+             'I': 126.904, 'Xe': 131.293, 'Pd':106.42,'Ag':107.8682,'Cd':112.414,'Pt':195.084,'Au':196.96657}
 
 atomic_nr = {'H': 1, 'Li': 3, 'B': 5, 'C': 6, 'N': 7, 'O': 8, 'F': 9, 'Ne': 10,
              'Na': 11, 'Mg': 12, 'Al': 13, 'Si': 14, 'P': 15, 'S': 16,
              'Cl': 17, 'Ar': 18, 'K': 19, 'Ca': 20, 'Ti': 22, 'Fe': 26, 'Cu': 29,
              'Zn': 30, 'Se': 34, 'Br': 35, 'Kr': 36, 'Mo': 42, 'Ru': 44,
-             'Sn': 50, 'Te': 52, 'I': 53, 'Xe': 54}
+             'Sn': 50, 'Te': 52, 'I': 53, 'Xe': 54 
+             'Pd':46,'Ag':47,'Cd':48,'Pt':78,'Au':79}
 
 def atomic_weight(name):
     if name[:2] in atomic_wt:
